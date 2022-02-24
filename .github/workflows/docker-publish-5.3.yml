@@ -5,9 +5,9 @@ on:
     branches: [ master ]
     paths:
       - '5.3/**'
+      - '.github/workflows/docker-publish-5.3.yml'
   workflow_dispatch:
     
-
 jobs:
 
   buildx:
@@ -36,19 +36,22 @@ jobs:
       run: | 
         docker build 5.3/alpine -f 5.3/alpine/Dockerfile \
         --platform linux/amd64,linux/arm64 \
-        --tag ${{ secrets.DOCKERHUB_USERNAME }}/nuster:5.3-alpine
+        --tag ${{ secrets.DOCKERHUB_USERNAME }}/nuster:5.3-alpine \
+        --push
 
     - name: Build nuster 5.3 debian
       run: | 
         docker build 5.3/debian -f 5.3/debian/Dockerfile \
         --platform linux/amd64,linux/arm64 \
         --tag ${{ secrets.DOCKERHUB_USERNAME }}/nuster:5.3 \
-        --tag ${{ secrets.DOCKERHUB_USERNAME }}/nuster:5.3-debian
+        --tag ${{ secrets.DOCKERHUB_USERNAME }}/nuster:5.3-debian \
+        --push
 
 
     - name: Build nuster 5.3 ubuntu
       run: | 
         docker build 5.3/ubuntu -f 5.3/ubuntu/Dockerfile \
         --platform linux/amd64,linux/arm64 \
-        --tag ${{ secrets.DOCKERHUB_USERNAME }}/nuster:5.3-ubuntu
+        --tag ${{ secrets.DOCKERHUB_USERNAME }}/nuster:5.3-ubuntu \
+        --push
       
